@@ -25,12 +25,23 @@ typedef struct s_cli_params
     t_scheduler	scheduler;
 }	t_cli_params;
 
-typedef struct t_coder
+typedef struct s_coder
 {
 	int		id;
-	pthread_t coder;
+    int     number_of_compiles;
+    int     last_compile_time;
+	pthread_t thread;
 
 }	t_coder;
+
+typedef struct s_simulation
+{
+    t_cli_params cli_params;
+    t_coder *coders;
+    pthread_mutex_t mutex;
+    pthread_cond_t condition;
+
+}   t_simulation;
 
 
 

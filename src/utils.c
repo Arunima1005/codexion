@@ -1,5 +1,23 @@
 #include "codexion.h"
 
+bool is_valid_number(char *str)
+{
+	int	i;
+
+	if (str[0] == '\0')
+		return (0);
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+
 bool parse_args(int argc, char **argv, t_cli_params *cli_params)
 {
     int i;
@@ -12,7 +30,7 @@ bool parse_args(int argc, char **argv, t_cli_params *cli_params)
     }
     while (i < 8)
     {
-        if (atoi(argv[i]) < 0)
+        if (!is_valid_number(argv[i]) || atoi(argv[i]) < 0)
         {
             fprintf(stderr, "Error: Invalid argument %d : %s \n", i, argv[i]);
             return (1);
@@ -41,3 +59,8 @@ bool parse_args(int argc, char **argv, t_cli_params *cli_params)
 
     return (0);
 }
+
+// void create_coders(t_coder *coder)
+// {
+//     for 
+// }
