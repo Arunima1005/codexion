@@ -60,7 +60,49 @@ bool parse_args(int argc, char **argv, t_cli_params *cli_params)
     return (0);
 }
 
-// void create_coders(t_coder *coder)
-// {
-//     for 
-// }
+void	*work(void *arg)
+{
+	t_coder	*coder;
+
+	coder = (t_coder *)arg;
+
+	printf("Coder %d started\n", coder->id);
+	return (NULL);
+}
+
+bool create_threads(t_coder *coder, int number_of_coders)
+{
+    int i;
+    i = 0;
+    while (i < number_of_coders){
+        coder[i].id = i;
+        coder[i].number_of_compiles = 0;
+        coder[i].last_compile_time = 0;
+        
+        if (pthread_create(&coder[i].thread, NULL, work, &coder[i]) != 0)
+        {    
+            fprintf(stderr, "ERROR: Failed to create coder %d\n", i);
+            return (1);
+        }
+        i++;
+    }
+    return (0);
+}
+
+bool	join_threads(t_coder *coders, int number_of_coders)
+{
+	int	i;
+
+	i = 0;
+	while (i < number_of_coders)
+	{
+		if (pthread_join(coders[i].thread, NULL) != 0)
+		{
+			fprintf(stderr, "Error: failed to join coder %d\n",
+				coders[i].id);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}

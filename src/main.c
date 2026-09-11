@@ -14,15 +14,21 @@ int main(int argc, char **argv)
         {
             fprintf(stderr, "ERROR: malloc failed: simulation coder creatation\n");
         }
-        
-        int i;
-        i = 0;
-        while (i < cli_params.number_of_coders){
-            simulation.coders[i].id = i;
-            simulation.coders[i].number_of_compiles = 0;
-            simulation.coders[i].last_compile_time = 0;
-            i++;
+
+        if (create_threads(simulation.coders,
+			cli_params.number_of_coders))
+        {
+            free(simulation.coders);
+            return (1);
         }
+
+        if (join_threads(simulation.coders,
+                cli_params.number_of_coders))
+        {
+            free(simulation.coders);
+            return (1);
+        }
+        
         free(simulation.coders);
         return (0);
     }

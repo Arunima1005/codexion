@@ -46,5 +46,8 @@ typedef struct s_simulation
 
 
 bool parse_args(int argc, char **argv, t_cli_params *cli_params);
+bool create_threads(t_coder *coder, int number_of_coders);
+void	*work(void *arg);
+bool	join_threads(t_coder *coders, int number_of_coders);
 
 #endif
