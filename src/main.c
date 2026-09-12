@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/12 16:43:56 by archowdh          #+#    #+#             */
+/*   Updated: 2026/09/12 18:53:10 by archowdh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "codexion.h"
 
 int main(int argc, char **argv)
@@ -15,15 +28,13 @@ int main(int argc, char **argv)
             fprintf(stderr, "ERROR: malloc failed: simulation coder creatation\n");
         }
 
-        if (create_threads(simulation.coders,
-			cli_params.number_of_coders))
+        if (create_threads(&simulation))
         {
             free(simulation.coders);
             return (1);
         }
 
-        if (join_threads(simulation.coders,
-                cli_params.number_of_coders))
+        if (join_threads(&simulation))
         {
             free(simulation.coders);
             return (1);
