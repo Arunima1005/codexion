@@ -6,11 +6,19 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 18:21:14 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/12 18:55:45 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/12 20:42:12 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+long get_time_ms(void)
+{
+	struct timeval tv;
+	gettimeofday(&tv,NULL);
+	return ((long)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
+
+}
 
 bool is_valid_number(char *str)
 {
@@ -28,6 +36,7 @@ bool is_valid_number(char *str)
 	}
 	return (1);
 }
+
 bool store_cli_params(char **argv, t_cli_params *cli_params)
 {
     *cli_params = (t_cli_params) {.number_of_coders = atoi(argv[1]),
@@ -76,16 +85,15 @@ bool parse_args(int argc, char **argv, t_cli_params *cli_params)
 void	*work(void *arg)
 {
 	t_coder	*coder;
-	struct timeval tv;
+	
 
 	coder = (t_coder *)arg;
     while (coder->number_of_compiles < coder->simulation->cli_params.number_of_compiles_required)
     {
 		printf("Coder %d started\n", coder->id);
-		gettimeofday(&tv,NULL);
+		
 		coder->number_of_compiles++;
-		coder->last_compile_start_time = (long)(tv.tv_sec * 1000 + tv.tv_usec / 1000);
-		//printf("%ld.%ld\n", (long)tv.tv_sec, (long)tv.tv_usec);
+		coder->last_compile_start_time = get_time_ms();
 		printf("coder->last_compile_start_time = %ld\n", coder->last_compile_start_time);
 		usleep(coder->simulation->cli_params.time_to_compile);
     }
