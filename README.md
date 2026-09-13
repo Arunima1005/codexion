@@ -3,3 +3,4 @@ A multithreaded C project exploring concurrency, synchronization, mutexes, condi
 
 
 ## ./codexion 3 6 77 88 11 2 3 edf  
+## ./codexion 4 800 200 100 100 3 100 fifo

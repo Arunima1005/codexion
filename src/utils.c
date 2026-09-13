@@ -12,14 +12,6 @@
 
 #include "codexion.h"
 
-long get_time_ms(void)
-{
-	struct timeval tv;
-	gettimeofday(&tv,NULL);
-	return ((long)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
-
-}
-
 bool is_valid_number(char *str)
 {
 	int	i;
@@ -82,6 +74,30 @@ bool parse_args(int argc, char **argv, t_cli_params *cli_params)
     return (store_cli_params(argv, cli_params));
 }
 
+void compile(t_coder *coder)
+{
+    take_dongle(coder);        
+    printf("%ld Coder %d started and has taken dongles %d and %d\n",get_elapsed_time(coder->simulation), coder->id, coder->dongles[0]->id, coder->dongles[1]->id);		
+    coder->number_of_compiles++;
+    coder->last_compile_start_time = get_time_ms();
+    get_usleep_ms(coder->simulation->cli_params.time_to_compile);
+    release_dongle(coder);
+    printf("%ld Coder %d has released dongles\n", get_elapsed_time(coder->simulation), coder->id); 
+}
+void debug(t_coder *coder)
+{
+    printf("%ld Coder %d has started debugging\n",get_elapsed_time(coder->simulation), coder->id);
+    get_usleep_ms(coder->simulation->cli_params.time_to_debug);
+    printf("%ld Coder %d has finished debugging\n", get_elapsed_time(coder->simulation), coder->id);
+    
+}
+void refactor(t_coder *coder)
+{
+    printf("%ld Coder %d has started refactoring\n", get_elapsed_time(coder->simulation), coder->id);
+    get_usleep_ms(coder->simulation->cli_params.time_to_refactor);
+    printf("%ld Coder %d has finished refactoring\n", get_elapsed_time(coder->simulation), coder->id);
+}
+
 void	*work(void *arg)
 {
 	t_coder	*coder;
@@ -90,28 +106,33 @@ void	*work(void *arg)
 	coder = (t_coder *)arg;
     while (coder->number_of_compiles < coder->simulation->cli_params.number_of_compiles_required)
     {
-		printf("Coder %d started\n", coder->id);
-		
-		coder->number_of_compiles++;
-		coder->last_compile_start_time = get_time_ms();
-		printf("coder->last_compile_start_time = %ld\n", coder->last_compile_start_time);
-		usleep(coder->simulation->cli_params.time_to_compile);
+        compile(coder);
+        debug(coder);
+        refactor(coder);
+
     }
-	printf("coder->number_of_compiles = %d\n", coder->number_of_compiles);
-	
 	return (NULL);
 }
 
 bool create_threads(t_simulation *simulation)
 {
     int i;
+    int coder_number;
 
     i = 0;
-    while (i < simulation->cli_params.number_of_coders){
+    coder_number = simulation->cli_params.number_of_coders;
+    while (i < coder_number){
         simulation->coders[i].id = i;
         simulation->coders[i].number_of_compiles = 0;
         simulation->coders[i].last_compile_start_time = 0;
 		simulation->coders[i].simulation = simulation;
+
+        simulation->coders[i].dongles[0] =
+			&simulation->dongles[
+				(i + 1) % coder_number];
+
+		simulation->coders[i].dongles[1] =
+			&simulation->dongles[i];
         
         if (pthread_create(&simulation->coders[i].thread, NULL, work, &simulation->coders[i]) != 0)
         {    

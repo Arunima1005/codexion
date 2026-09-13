@@ -6,6 +6,8 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 INCLUDES = -Iinclude
 
 SRC = src/main.c \
+	src/time_utils.c \
+	src/dongle_utils.c \
       src/utils.c
 
 OBJ = $(SRC:.c=.o)
