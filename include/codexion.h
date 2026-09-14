@@ -58,6 +58,7 @@ typedef struct s_simulation
 	pthread_mutex_t		mutex;
 	pthread_cond_t		condition;
     long				start_time;
+	bool				end_time;
 	t_dongle			*dongles;
 }	t_simulation;
 

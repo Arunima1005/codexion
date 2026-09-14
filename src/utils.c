@@ -102,14 +102,24 @@ void	*work(void *arg)
 {
 	t_coder	*coder;
 	
-
 	coder = (t_coder *)arg;
-    while (coder->number_of_compiles < coder->simulation->cli_params.number_of_compiles_required)
+    while (!coder->simulation->end_time  && coder->number_of_compiles < coder->simulation->cli_params.number_of_compiles_required)
     {
+        long elapsed;
+
+        elapsed = get_time_ms() - coder->last_compile_start_time;
+
+        if (elapsed >= coder->simulation->cli_params.time_to_burnout)
+        {
+            // Burnout
+            coder->simulation->end_time = 1;
+            printf("%ld coder %d is bournout\n", get_elapsed_time(coder->simulation), coder->id);
+            return (NULL);
+        }
+
         compile(coder);
         debug(coder);
         refactor(coder);
-
     }
 	return (NULL);
 }
@@ -124,7 +134,7 @@ bool create_threads(t_simulation *simulation)
     while (i < coder_number){
         simulation->coders[i].id = i;
         simulation->coders[i].number_of_compiles = 0;
-        simulation->coders[i].last_compile_start_time = 0;
+        simulation->coders[i].last_compile_start_time = simulation->start_time;
 		simulation->coders[i].simulation = simulation;
 
         simulation->coders[i].dongles[0] =

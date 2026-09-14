@@ -42,6 +42,7 @@ int main(int argc, char **argv)
 
         // printf("calling create dongle \n");
         create_dongles(&simulation);
+        simulation.end_time = 0;
 		simulation.start_time = get_time_ms();
         // printf("end create dongle \n");
         if (create_threads(&simulation))
