@@ -68,6 +68,7 @@ typedef struct s_dongle
 {
 	bool					is_available;
 	int						id;
+	long					available_time;
 }							t_dongle;
 
 bool						parse_args(int argc, char **argv,
@@ -85,4 +86,5 @@ void						release_dongle(t_coder *coder);
 bool						take_dongle(t_coder *coder);
 bool						create_monitor_thread(t_simulation *simulation);
 void						*monitor(void *arg);
+void	get_timespec(long target_ms, struct timespec *ts);
 #endif

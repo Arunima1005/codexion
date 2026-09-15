@@ -20,6 +20,12 @@ long	get_time_ms(void)
 	return ((long)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
 }
 
+void	get_timespec(long target_ms, struct timespec *ts)
+{
+	ts->tv_sec = target_ms / 1000;
+	ts->tv_nsec = (target_ms % 1000) * 1000000;
+}
+
 void	get_usleep_ms(long ms)
 {
 	usleep(ms * 1000);
@@ -27,5 +33,13 @@ void	get_usleep_ms(long ms)
 
 long	get_elapsed_time(t_simulation *simulation)
 {
+	long	current_time;
+
+	current_time = get_time_ms();
+
+	printf("DEBUG: current=%ld start=%ld elapsed=%ld\n",
+		current_time,
+		simulation->start_time,
+		current_time - simulation->start_time);
 	return (get_time_ms() - simulation->start_time);
 }

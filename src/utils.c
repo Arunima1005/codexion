@@ -16,7 +16,6 @@ void	compile(t_coder *coder)
 {
 	if (!take_dongle(coder))
 		return ;
-	
 	pthread_mutex_lock(&coder->simulation->mutex);
 	coder->last_compile_start_time = get_time_ms();
 	printf("%ld Coder %d started and has taken dongles %d and %d\n",
