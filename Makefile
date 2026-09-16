@@ -11,7 +11,12 @@ SRC = src/main.c \
       src/work.c \
       src/parse.c \
       src/priority_queue.c \
-	  src/log.c
+	  src/log.c \
+	  src/coder_action.c \
+	  src/coder_setup.c \
+	  src/dongle_scheduler.c \
+	  src/monitor.c \
+	  src/priority_queue_utils.c
 
 OBJ = $(SRC:.c=.o)
 

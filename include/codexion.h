@@ -83,33 +83,41 @@ typedef struct s_dongle
 	t_priority_queue		queue;
 }							t_dongle;
 
-/* parse */
+
+/* parse.c */
 bool						parse_args(int argc, char **argv,
 								t_cli_params *cli_params);
 bool						store_cli_params(char **argv,
 								t_cli_params *cli_params);
 
-/* threads */
+/* thread_setup.c */
 bool						create_threads(t_simulation *simulation);
-void						*work(void *arg);
-bool						join_threads(t_simulation *simulation);
-bool						create_monitor_thread(t_simulation *simulation);
-void						*monitor(void *arg);
 bool						all_coders_finished(t_simulation *simulation);
+bool						join_threads(t_simulation *simulation);
 
-/* dongles */
+/* work.c */
+void						*work(void *arg);
+
+/* coder_actions.c */
+bool						compile(t_coder *coder);
+void						debug(t_coder *coder);
+void						refactor(t_coder *coder);
+
+/* monitor.c */
+void						*monitor(void *arg);
+bool						create_monitor_thread(t_simulation *simulation);
+
+/* dongle_utils.c */
 bool						create_dongles(t_simulation *simulation);
 void						destroy_dongles(t_simulation *simulation);
-void						release_dongle(t_coder *coder);
-bool						take_dongle(t_coder *coder);
 bool						add_coder_to_queue(t_dongle *dongle,
 								t_coder *coder);
+void						release_dongle(t_coder *coder);
 
-/* scheduling */
-bool						has_higher_priority(t_coder *coder1,
-								t_coder *coder2);
+/* dongle_scheduler.c */
+bool						take_dongle(t_coder *coder);
 
-/* priority queue (binary heap) */
+/* priority_queue.c */
 bool						init_priority_queue(t_priority_queue *queue,
 								int max_size);
 bool						priority_queue_push(t_priority_queue *queue,
@@ -119,13 +127,19 @@ void						priority_queue_remove(t_priority_queue *queue,
 								t_coder *coder);
 void						destroy_priority_queue(t_priority_queue *queue);
 
-/* time */
+/* priority_queue_utils.c */
+void						heapify_up(t_priority_queue *queue, int index);
+void						heapify_down(t_priority_queue *queue, int index);
+bool						has_higher_priority(t_coder *coder1,
+								t_coder *coder2);
+
+/* time_utils.c */
 long						get_time_ms(void);
 long						get_elapsed_time(t_simulation *simulation);
 void						get_timespec(long target_ms, struct timespec *ts);
 void						get_usleep_ms(long ms);
 
-/* logging */
+/* log.c */
 void						log_state(t_coder *coder, const char *state);
 
 #endif
