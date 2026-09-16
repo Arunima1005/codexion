@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 10:59:19 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/15 11:02:31 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/16 20:36:24 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,11 @@ void	get_timespec(long target_ms, struct timespec *ts)
 
 void	get_usleep_ms(long ms)
 {
-	usleep(ms * 1000);
+	if (ms > 0)
+		usleep(ms * 1000);
 }
 
 long	get_elapsed_time(t_simulation *simulation)
 {
-	long	current_time;
-
-	current_time = get_time_ms();
-
-	printf("DEBUG: current=%ld start=%ld elapsed=%ld\n",
-		current_time,
-		simulation->start_time,
-		current_time - simulation->start_time);
 	return (get_time_ms() - simulation->start_time);
 }

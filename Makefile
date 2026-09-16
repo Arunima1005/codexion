@@ -9,7 +9,8 @@ SRC = src/main.c \
 	src/time_utils.c \
 	src/dongle_utils.c \
       src/utils.c \
-	  src/parse.c
+	  src/parse.c \
+	  src/heap.c
 
 OBJ = $(SRC:.c=.o)
 

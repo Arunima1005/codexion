@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 12:06:47 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/15 12:06:49 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/16 20:31:48 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,26 @@ bool	is_valid_number(char *str)
 	int	i;
 
 	if (str[0] == '\0')
-		return (0);
+		return (false);
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (0);
+			return (false);
 		i++;
 	}
-	return (1);
+	return (true);
 }
 
 bool	store_cli_params(char **argv, t_cli_params *cli_params)
 {
-	*cli_params = (t_cli_params){.number_of_coders = atoi(argv[1]),
-		.time_to_burnout = atoi(argv[2]), .time_to_compile = atoi(argv[3]),
-		.time_to_debug = atoi(argv[4]), .time_to_refactor = atoi(argv[5]),
-		.number_of_compiles_required = atoi(argv[6]),
-		.dongle_cooldown = atoi(argv[7])};
+	cli_params->number_of_coders = atoi(argv[1]);
+	cli_params->time_to_burnout = atoi(argv[2]);
+	cli_params->time_to_compile = atoi(argv[3]);
+	cli_params->time_to_debug = atoi(argv[4]);
+	cli_params->time_to_refactor = atoi(argv[5]);
+	cli_params->number_of_compiles_required = atoi(argv[6]);
+	cli_params->dongle_cooldown = atoi(argv[7]);
 	if (!strcmp(argv[8], "edf"))
 		cli_params->scheduler = EDF;
 	else if (!strcmp(argv[8], "fifo"))
@@ -42,9 +44,9 @@ bool	store_cli_params(char **argv, t_cli_params *cli_params)
 	else
 	{
 		fprintf(stderr, "Error: Invalid scheduler %s\n", argv[8]);
-		return (1);
+		return (false);
 	}
-	return (0);
+	return (true);
 }
 
 bool	parse_args(int argc, char **argv, t_cli_params *cli_params)
@@ -59,12 +61,17 @@ bool	parse_args(int argc, char **argv, t_cli_params *cli_params)
 	}
 	while (i < 8)
 	{
-		if (!is_valid_number(argv[i]) || atoi(argv[i]) == 0)
+		if (!is_valid_number(argv[i]))
 		{
 			fprintf(stderr, "Error: Invalid argument %d : %s \n", i, argv[i]);
-			return (1);
+			return (false);
 		}
 		i++;
+	}
+	if (atoi(argv[1]) < 1)
+	{
+		fprintf(stderr, "Error: number_of_coders must be at least 1\n");
+		return (false);
 	}
 	return (store_cli_params(argv, cli_params));
 }
