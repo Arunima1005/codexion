@@ -6,11 +6,12 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 INCLUDES = -Iinclude
 
 SRC = src/main.c \
-	src/time_utils.c \
-	src/dongle_utils.c \
-      src/utils.c \
-	  src/parse.c \
-	  src/heap.c
+      src/time_utils.c \
+      src/dongle_utils.c \
+      src/work.c \
+      src/parse.c \
+      src/priority_queue.c \
+	  src/log.c
 
 OBJ = $(SRC:.c=.o)
 

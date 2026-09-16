@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 12:06:47 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/16 20:31:48 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/16 21:18:09 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,17 @@ bool	parse_args(int argc, char **argv, t_cli_params *cli_params)
 {
 	int	i;
 
-	i = 1;
 	if (argc != 9)
 	{
-		fprintf(stderr, "Error: Expected 8 arguments, got %d\n", argc - 1);
-		return (1);
+		fprintf(stderr, "Error: expected 8 arguments, got %d\n", argc - 1);
+		return (false);
 	}
+	i = 1;
 	while (i < 8)
 	{
 		if (!is_valid_number(argv[i]))
 		{
-			fprintf(stderr, "Error: Invalid argument %d : %s \n", i, argv[i]);
+			fprintf(stderr, "Error: invalid argument %d: %s\n", i, argv[i]);
 			return (false);
 		}
 		i++;

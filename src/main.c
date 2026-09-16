@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 16:43:56 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/16 20:28:38 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/16 21:19:30 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ int	main(int argc, char **argv)
 	t_cli_params	cli_params;
 	t_simulation	simulation;
 
-	if (parse_args(argc, argv, &cli_params))
+	if (!parse_args(argc, argv, &cli_params))
 		return (1);
 	simulation.cli_params = cli_params;
 	simulation.coders = malloc(sizeof(t_coder) * (cli_params.number_of_coders));
 	simulation.dongles = malloc(sizeof(t_dongle)
 			* (cli_params.number_of_coders));
+
 	if (!simulation.coders || !simulation.dongles)
 	{
 		fprintf(stderr, "ERROR: malloc failed\n");
@@ -53,11 +54,6 @@ int	main(int argc, char **argv)
 	{
 		free(simulation.coders);
 		free(simulation.dongles);
-		return (1);
-	}
-	if (join_threads(&simulation))
-	{
-		free(simulation.coders);
 		return (1);
 	}
 	join_threads(&simulation);

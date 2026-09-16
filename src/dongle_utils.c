@@ -6,13 +6,13 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 10:59:01 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/16 20:23:16 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/16 21:03:29 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	create_dongles(t_simulation *simulation)
+bool	create_dongles(t_simulation *simulation)
 {
 	int	i;
 
@@ -24,9 +24,10 @@ void	create_dongles(t_simulation *simulation)
 		simulation->dongles[i].available_time = 0;
 		if (!init_priority_queue(&simulation->dongles[i].queue,
 				simulation->cli_params.number_of_coders))
-			return ;
+			return (false);
 		i++;
 	}
+	return (true);
 }
 void	destroy_dongles(t_simulation *simulation)
 {
@@ -38,20 +39,6 @@ void	destroy_dongles(t_simulation *simulation)
 		destroy_priority_queue(&simulation->dongles[i].queue);
 		i++;
 	}
-}
-
-bool	has_higher_priority(t_coder *coder1, t_coder *coder2)
-{
-	long	deadline1;
-	long	deadline2;
-
-	if (coder1->simulation->cli_params.scheduler == FIFO)
-		return (coder1->request_order < coder2->request_order);
-	deadline1 = coder1->last_compile_start_time
-		+ coder1->simulation->cli_params.time_to_burnout;
-	deadline2 = coder2->last_compile_start_time
-		+ coder2->simulation->cli_params.time_to_burnout;
-	return (deadline1 < deadline2);
 }
 
 bool	add_coder_to_queue(t_dongle *dongle, t_coder *coder)
