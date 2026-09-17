@@ -17,6 +17,5 @@ void	log_state(t_coder *coder, const char *state)
 	pthread_mutex_lock(&coder->simulation->log_mutex);
 	printf("%ld %d %s\n", get_elapsed_time(coder->simulation),
 		coder->id, state);
-	fflush(stdout);
 	pthread_mutex_unlock(&coder->simulation->log_mutex);
 }

@@ -21,8 +21,16 @@ static bool	fail_init(t_simulation *simulation)
 
 static bool	run_simulation(t_simulation *simulation)
 {
-	if (create_threads(simulation) || create_monitor_thread(simulation))
+	int	n;
+
+	n = simulation->cli_params.number_of_coders;
+	if (create_threads(simulation))
 		return (false);
+	if (create_monitor_thread(simulation))
+	{
+		stop_and_join_coders(simulation, n);
+		return (false);
+	}
 	join_threads(simulation);
 	pthread_mutex_lock(&simulation->mutex);
 	simulation->simulation_stop = true;

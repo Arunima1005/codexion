@@ -17,6 +17,11 @@ bool	compile(t_coder *coder)
 	get_usleep_ms(coder->simulation->cli_params.time_to_compile);
 	pthread_mutex_lock(&coder->simulation->mutex);
 	coder->number_of_compiles++;
+	if (all_coders_finished(coder->simulation))
+	{
+		coder->simulation->simulation_stop = true;
+		pthread_cond_broadcast(&coder->simulation->condition);
+	}
 	pthread_mutex_unlock(&coder->simulation->mutex);
 	release_dongle(coder);
 	return (true);

@@ -12,6 +12,23 @@ static void	init_coder(t_simulation *simulation, int i, int n)
 	simulation->coders[i].dongles[1] = &simulation->dongles[i];
 }
 
+void	stop_and_join_coders(t_simulation *simulation, int count)
+{
+	int	i;
+
+	pthread_mutex_lock(&simulation->mutex);
+	simulation->simulation_stop = true;
+	pthread_cond_broadcast(&simulation->condition);
+	pthread_mutex_unlock(&simulation->mutex);
+	i = 0;
+	while (i < count)
+	{
+		pthread_join(simulation->coders[i].thread, NULL);
+		stop_and_join_coders(simulation, i);
+        i++;
+	}
+}
+
 bool	create_threads(t_simulation *simulation)
 {
 	int	i;

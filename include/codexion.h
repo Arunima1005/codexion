@@ -94,6 +94,7 @@ bool						store_cli_params(char **argv,
 bool						create_threads(t_simulation *simulation);
 bool						all_coders_finished(t_simulation *simulation);
 bool						join_threads(t_simulation *simulation);
+void	stop_and_join_coders(t_simulation *simulation, int count);
 
 /* work.c */
 void						*work(void *arg);

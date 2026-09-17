@@ -24,15 +24,15 @@ static bool	coder_should_stop(t_coder *coder)
 	return (stop);
 }
 
-static bool	simulation_stopped(t_coder *coder)
-{
-	bool	stop;
+// static bool	simulation_stopped(t_coder *coder)
+// {
+// 	bool	stop;
 
-	pthread_mutex_lock(&coder->simulation->mutex);
-	stop = coder->simulation->simulation_stop;
-	pthread_mutex_unlock(&coder->simulation->mutex);
-	return (stop);
-}
+// 	pthread_mutex_lock(&coder->simulation->mutex);
+// 	stop = coder->simulation->simulation_stop;
+// 	pthread_mutex_unlock(&coder->simulation->mutex);
+// 	return (stop);
+// }
 
 void	*work(void *arg)
 {
@@ -43,9 +43,11 @@ void	*work(void *arg)
 	{
 		if (!compile(coder))
 			break ;
-		if (simulation_stopped(coder))
+		if (coder_should_stop(coder))
 			break ;
 		debug(coder);
+		if (coder_should_stop(coder))
+			break ;
 		refactor(coder);
 	}
 	return (NULL);
