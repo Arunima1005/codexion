@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   coder_setup.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/18 11:39:42 by archowdh          #+#    #+#             */
+/*   Updated: 2026/09/18 11:49:03 by archowdh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
 
 static void	init_coder(t_simulation *simulation, int i, int n)
@@ -25,7 +37,7 @@ void	stop_and_join_coders(t_simulation *simulation, int count)
 	{
 		pthread_join(simulation->coders[i].thread, NULL);
 		stop_and_join_coders(simulation, i);
-        i++;
+		i++;
 	}
 }
 

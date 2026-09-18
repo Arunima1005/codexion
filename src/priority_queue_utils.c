@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   priority_queue_utils.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/18 11:38:48 by archowdh          #+#    #+#             */
+/*   Updated: 2026/09/18 11:38:52 by archowdh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
 
 static void	swap_coders(t_coder **a, t_coder **b)
@@ -46,7 +58,6 @@ void	heapify_down(t_priority_queue *queue, int index)
 		index = best;
 	}
 }
-
 
 bool	has_higher_priority(t_coder *coder1, t_coder *coder2)
 {

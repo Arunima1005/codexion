@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 10:59:01 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/16 21:03:29 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/18 11:47:35 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ bool	create_dongles(t_simulation *simulation)
 	}
 	return (true);
 }
+
 void	destroy_dongles(t_simulation *simulation)
 {
 	int	i;
@@ -48,7 +49,7 @@ bool	add_coder_to_queue(t_dongle *dongle, t_coder *coder)
 
 void	release_dongle(t_coder *coder)
 {
-	long current_time;
+	long	current_time;
 
 	pthread_mutex_lock(&coder->simulation->mutex);
 	coder->dongles[0]->is_available = true;
@@ -56,7 +57,6 @@ void	release_dongle(t_coder *coder)
 	current_time = get_time_ms();
 	coder->dongles[0]->available_time = current_time
 		+ coder->simulation->cli_params.dongle_cooldown;
-
 	coder->dongles[1]->available_time = current_time
 		+ coder->simulation->cli_params.dongle_cooldown;
 	pthread_cond_broadcast(&coder->simulation->condition);

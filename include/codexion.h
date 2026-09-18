@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 16:36:39 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/16 21:04:45 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/18 11:36:34 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct s_dongle
 	t_priority_queue		queue;
 }							t_dongle;
 
-
 /* parse.c */
 bool						parse_args(int argc, char **argv,
 								t_cli_params *cli_params);
@@ -94,7 +93,8 @@ bool						store_cli_params(char **argv,
 bool						create_threads(t_simulation *simulation);
 bool						all_coders_finished(t_simulation *simulation);
 bool						join_threads(t_simulation *simulation);
-void	stop_and_join_coders(t_simulation *simulation, int count);
+void						stop_and_join_coders(t_simulation *simulation,
+								int count);
 
 /* work.c */
 void						*work(void *arg);

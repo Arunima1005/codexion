@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dongle_scheduler.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/18 11:39:30 by archowdh          #+#    #+#             */
+/*   Updated: 2026/09/18 11:49:42 by archowdh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
 
 static bool	register_request(t_coder *coder)
@@ -57,9 +69,9 @@ static bool	announce_grant(t_coder *coder)
 
 bool	take_dongle(t_coder *coder)
 {
-	t_simulation		*simulation;
-	struct timespec		timeout;
-	long				now;
+	t_simulation	*simulation;
+	struct timespec	timeout;
+	long			now;
 
 	simulation = coder->simulation;
 	pthread_mutex_lock(&simulation->mutex);
