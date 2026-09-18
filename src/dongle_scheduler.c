@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 11:39:30 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 11:49:42 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/18 20:13:18 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,14 @@ static bool	register_request(t_coder *coder)
 	coder->request_order = coder->simulation->next_request_order++;
 	if (!add_coder_to_queue(coder->dongles[0], coder))
 		return (false);
-	if (!add_coder_to_queue(coder->dongles[1], coder))
+	// if (!add_coder_to_queue(coder->dongles[1], coder))
+	// 	return (false);
+	if (coder->dongles[1] != coder->dongles[0]
+		&& !add_coder_to_queue(coder->dongles[1], coder))
+	{
+		priority_queue_remove(&coder->dongles[0]->queue, coder);
 		return (false);
+	}
 	return (true);
 }
 
