@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 11:39:42 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 11:49:03 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/18 18:48:24 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,20 @@ bool	create_threads(t_simulation *simulation)
 	return (false);
 }
 
-bool	all_coders_finished(t_simulation *simulation)
-{
-	int	i;
+// bool	all_coders_finished(t_simulation *simulation)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < simulation->cli_params.number_of_coders)
-	{
-		if (simulation->coders[i].number_of_compiles
-			< simulation->cli_params.number_of_compiles_required)
-			return (false);
-		i++;
-	}
-	return (true);
-}
+// 	i = 0;
+// 	while (i < simulation->cli_params.number_of_coders)
+// 	{
+// 		if (simulation->coders[i].number_of_compiles
+// 			< simulation->cli_params.number_of_compiles_required)
+// 			return (false);
+// 		i++;
+// 	}
+// 	return (true);
+// }
 
 bool	join_threads(t_simulation *simulation)
 {

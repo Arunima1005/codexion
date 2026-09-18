@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 11:39:00 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 11:46:22 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/18 18:52:04 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ static bool	monitor_tick(t_simulation *simulation)
 	int	index;
 
 	pthread_mutex_lock(&simulation->mutex);
-	if (simulation->simulation_stop || all_coders_finished(simulation))
+	if (simulation->simulation_stop)
 	{
-		simulation->simulation_stop = true;
-		pthread_cond_broadcast(&simulation->condition);
 		pthread_mutex_unlock(&simulation->mutex);
 		return (true);
 	}

@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 16:36:39 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 11:36:34 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/18 18:52:26 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ bool						store_cli_params(char **argv,
 
 /* thread_setup.c */
 bool						create_threads(t_simulation *simulation);
-bool						all_coders_finished(t_simulation *simulation);
 bool						join_threads(t_simulation *simulation);
 void						stop_and_join_coders(t_simulation *simulation,
 								int count);
