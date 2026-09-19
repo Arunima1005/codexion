@@ -6,11 +6,17 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 11:39:00 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 20:17:28 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 14:52:23 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+static bool	can_burn_out(t_simulation *simulation, t_coder *coder)
+{
+	return (!coder->burnout && coder->number_of_compiles
+		< simulation->cli_params.number_of_compiles_required);
+}
 
 static bool	scan_burnout(t_simulation *simulation, int *out_index)
 {
@@ -20,7 +26,7 @@ static bool	scan_burnout(t_simulation *simulation, int *out_index)
 	i = 0;
 	while (i < simulation->cli_params.number_of_coders)
 	{
-		if (!simulation->coders[i].burnout)
+		if (can_burn_out(simulation, &simulation->coders[i]))
 		{
 			elapsed = get_time_ms()
 				- simulation->coders[i].last_compile_start_time;
@@ -38,6 +44,7 @@ static bool	scan_burnout(t_simulation *simulation, int *out_index)
 static bool	monitor_tick(t_simulation *simulation)
 {
 	int	index;
+	int compiles;
 
 	pthread_mutex_lock(&simulation->mutex);
 	if (simulation->simulation_stop)
@@ -49,9 +56,10 @@ static bool	monitor_tick(t_simulation *simulation)
 	{
 		simulation->simulation_stop = true;
 		simulation->coders[index].burnout = true;
+		compiles = simulation->coders[index].number_of_compiles;
 		pthread_cond_broadcast(&simulation->condition);
 		pthread_mutex_unlock(&simulation->mutex);
-		log_state(&simulation->coders[index], "burned out");
+		log_burnout(&simulation->coders[index], compiles);
 		return (true);
 	}
 	pthread_mutex_unlock(&simulation->mutex);

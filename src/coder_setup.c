@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 11:39:42 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 19:47:39 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 13:46:20 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	stop_and_join_coders(t_simulation *simulation, int count)
 	while (i < count)
 	{
 		pthread_join(simulation->coders[i].thread, NULL);
-		stop_and_join_coders(simulation, i);
 		i++;
 	}
 }
@@ -61,21 +60,6 @@ bool	create_threads(t_simulation *simulation)
 	}
 	return (false);
 }
-
-// bool	all_coders_finished(t_simulation *simulation)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < simulation->cli_params.number_of_coders)
-// 	{
-// 		if (simulation->coders[i].number_of_compiles
-// 			< simulation->cli_params.number_of_compiles_required)
-// 			return (false);
-// 		i++;
-// 	}
-// 	return (true);
-// }
 
 bool	join_threads(t_simulation *simulation)
 {

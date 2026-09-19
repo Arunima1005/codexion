@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 11:39:52 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 19:47:57 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 13:43:52 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	compile(t_coder *coder)
 	}
 	coder->last_compile_start_time = get_time_ms();
 	pthread_mutex_unlock(&coder->simulation->mutex);
-	log_state(coder, "is compiling");
+	log_compile_start(coder);
 	get_usleep_ms(coder->simulation->cli_params.time_to_compile);
 	pthread_mutex_lock(&coder->simulation->mutex);
 	coder->number_of_compiles++;

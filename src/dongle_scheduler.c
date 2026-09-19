@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 11:39:30 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 20:26:59 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 14:39:03 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,30 +51,9 @@ static bool	try_grant_dongles(t_coder *coder, long now)
 	return (true);
 }
 
-static long	compute_wake_time(t_coder *coder, long now)
-{
-	long	wake_time;
-
-	wake_time = coder->dongles[0]->available_time;
-	if (coder->dongles[1]->available_time > wake_time)
-		wake_time = coder->dongles[1]->available_time;
-	if (wake_time <= now)
-		wake_time = now + 5;
-	return (wake_time);
-}
-
-static bool	announce_grant(t_coder *coder)
-{
-	pthread_mutex_unlock(&coder->simulation->mutex);
-	log_state(coder, "has taken a dongle");
-	log_state(coder, "has taken a dongle");
-	return (true);
-}
-
 bool	take_dongle(t_coder *coder)
 {
 	t_simulation	*simulation;
-	struct timespec	timeout;
 	long			now;
 
 	simulation = coder->simulation;
@@ -88,13 +67,11 @@ bool	take_dongle(t_coder *coder)
 	{
 		now = get_time_ms();
 		if (try_grant_dongles(coder, now))
-			return (announce_grant(coder));
-		get_timespec(compute_wake_time(coder, now), &timeout);
-		pthread_cond_timedwait(&simulation->condition, &simulation->mutex,
-			&timeout);
+		{
+			pthread_mutex_unlock(&simulation->mutex);
+			return (true);
+		}
+		wait_for_turn(coder, now);
 	}
-	priority_queue_remove(&coder->dongles[0]->queue, coder);
-	priority_queue_remove(&coder->dongles[1]->queue, coder);
-	pthread_mutex_unlock(&simulation->mutex);
-	return (false);
+	return (abort_request(coder));
 }

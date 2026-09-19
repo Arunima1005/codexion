@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 18:21:14 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 18:52:34 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 14:49:41 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	*work(void *arg)
 	t_coder	*coder;
 
 	coder = (t_coder *)arg;
+	if (coder->id % 2 == 0)
+		get_usleep_ms(coder->simulation->cli_params.time_to_compile / 2);
 	while (!simulation_stopped(coder) && !coder_has_completed_compiles(coder))
 	{
 		if (!compile(coder))

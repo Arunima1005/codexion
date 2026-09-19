@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 16:36:39 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 18:52:26 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 14:51:24 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+# define COLOR_RESET "\033[0m"
+# define COLOR_GREEN "\033[32m"
+# define COLOR_RED "\033[31m"
+# define COLOR_YELLOW "\033[33m"
+# define COLOR_CYAN "\033[36m"
+# define COLOR_MAGENTA "\033[1;35m"
 
 typedef struct s_simulation	t_simulation;
 typedef struct s_dongle		t_dongle;
@@ -39,6 +46,8 @@ typedef struct s_cli_params
 	int						number_of_compiles_required;
 	int						dongle_cooldown;
 	t_scheduler				scheduler;
+	bool					details;
+	bool					color;
 }							t_cli_params;
 
 typedef struct s_coder
@@ -66,6 +75,7 @@ typedef struct s_simulation
 	t_dongle				*dongles;
 	pthread_t				monitor_thread;
 	int						next_request_order;
+	bool					log_closed;
 }							t_simulation;
 
 typedef struct s_priority_queue
@@ -116,6 +126,9 @@ void						release_dongle(t_coder *coder);
 
 /* dongle_scheduler.c */
 bool						take_dongle(t_coder *coder);
+/* dongle_wait.c */
+void						wait_for_turn(t_coder *coder, long now);
+bool						abort_request(t_coder *coder);
 
 /* priority_queue.c */
 bool						init_priority_queue(t_priority_queue *queue,
@@ -141,5 +154,14 @@ void						get_usleep_ms(long ms);
 
 /* log.c */
 void						log_state(t_coder *coder, const char *state);
+void						log_compile_start(t_coder *coder);
+void						log_burnout(t_coder *coder, int compiles);
+
+/* log_utils.c */
+void						line_begin(t_coder *coder, long timestamp,
+								const char *color);
+void						line_end(t_coder *coder);
+void						print_dongle_line(t_coder *coder, long timestamp,
+								t_dongle *dongle);
 
 #endif

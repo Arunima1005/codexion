@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 12:06:47 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/16 21:18:09 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 14:47:56 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,34 @@ bool	store_cli_params(char **argv, t_cli_params *cli_params)
 	return (true);
 }
 
-bool	parse_args(int argc, char **argv, t_cli_params *cli_params)
+static bool	parse_flags(int argc, char **argv, t_cli_params *cli_params)
 {
 	int	i;
 
-	if (argc != 9)
+	cli_params->details = false;
+	cli_params->color = false;
+	i = 9;
+	while (i < argc)
+	{
+		if (!strcmp(argv[i], "--details"))
+			cli_params->details = true;
+		else if (!strcmp(argv[i], "--color"))
+			cli_params->color = true;
+		else
+		{
+			fprintf(stderr, "Error: unknown option %s\n", argv[i]);
+			return (false);
+		}
+		i++;
+	}
+	return (true);
+}
+
+bool	parse_args(int argc, char **argv, t_cli_params *cli_params)
+{
+	int	i;
+	
+	if (argc < 9 ||  argc > 11)
 	{
 		fprintf(stderr, "Error: expected 8 arguments, got %d\n", argc - 1);
 		return (false);
@@ -73,5 +96,7 @@ bool	parse_args(int argc, char **argv, t_cli_params *cli_params)
 		fprintf(stderr, "Error: number_of_coders must be at least 1\n");
 		return (false);
 	}
-	return (store_cli_params(argv, cli_params));
+	if (!store_cli_params(argv, cli_params))
+		return (false);
+	return (parse_flags(argc, argv, cli_params));
 }

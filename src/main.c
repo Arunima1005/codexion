@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 16:43:56 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 19:48:26 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 13:49:40 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static bool	init_simulation(t_simulation *simulation, t_cli_params cli_params)
 		return (fail_init(simulation));
 	simulation->simulation_stop = false;
 	simulation->next_request_order = 0;
+	simulation->log_closed = false;
 	return (true);
 }
 
