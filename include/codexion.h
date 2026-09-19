@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 16:36:39 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/19 18:03:49 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 19:49:39 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_coder
 	int						id;
 	int						number_of_compiles;
 	long					last_compile_start_time;
-	long					request_time;
 	int						request_order;
 	pthread_t				thread;
 	t_simulation			*simulation;

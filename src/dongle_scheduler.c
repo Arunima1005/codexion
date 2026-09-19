@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 11:39:30 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/19 18:04:02 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 19:50:04 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static bool	register_request(t_coder *coder)
 {
-	coder->request_time = get_time_ms();
 	coder->request_order = coder->simulation->next_request_order++;
 	if (!add_coder_to_queue(coder->dongles[0], coder))
 		return (false);
