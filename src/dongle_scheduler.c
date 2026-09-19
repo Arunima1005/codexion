@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 11:39:30 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/19 14:39:03 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 18:04:02 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ bool	take_dongle(t_coder *coder)
 		}
 		wait_for_turn(coder, now);
 	}
-	return (abort_request(coder));
+	pthread_mutex_unlock(&simulation->mutex);
+	return (false);
 }

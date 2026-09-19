@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 10:59:19 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/18 11:38:35 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 16:44:39 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@ long	get_time_ms(void)
 
 	gettimeofday(&tv, NULL);
 	return ((long)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
-}
-
-void	get_timespec(long target_ms, struct timespec *ts)
-{
-	ts->tv_sec = target_ms / 1000;
-	ts->tv_nsec = (target_ms % 1000) * 1000000;
 }
 
 void	get_usleep_ms(long ms)

@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 16:36:39 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/19 14:51:24 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 18:03:49 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define COLOR_RESET "\033[0m"
-# define COLOR_GREEN "\033[32m"
-# define COLOR_RED "\033[31m"
-# define COLOR_YELLOW "\033[33m"
-# define COLOR_CYAN "\033[36m"
-# define COLOR_MAGENTA "\033[1;35m"
+# define COLOR_RESET		"\033[0m"
+# define COLOR_GREEN		"\033[38;5;108m"
+# define COLOR_RED			"\033[38;5;174m"
+# define COLOR_YELLOW		"\033[38;5;180m"
+# define COLOR_CYAN			"\033[38;5;109m"
+# define COLOR_BLUE			"\033[38;5;110m"
+# define COLOR_MAGENTA		"\033[38;5;139m"
 
 typedef struct s_simulation	t_simulation;
 typedef struct s_dongle		t_dongle;
@@ -128,7 +129,6 @@ void						release_dongle(t_coder *coder);
 bool						take_dongle(t_coder *coder);
 /* dongle_wait.c */
 void						wait_for_turn(t_coder *coder, long now);
-bool						abort_request(t_coder *coder);
 
 /* priority_queue.c */
 bool						init_priority_queue(t_priority_queue *queue,
@@ -149,7 +149,6 @@ bool						has_higher_priority(t_coder *coder1,
 /* time_utils.c */
 long						get_time_ms(void);
 long						get_elapsed_time(t_simulation *simulation);
-void						get_timespec(long target_ms, struct timespec *ts);
 void						get_usleep_ms(long ms);
 
 /* log.c */

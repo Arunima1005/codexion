@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/19 14:34:53 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/19 14:36:40 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 18:04:08 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,4 @@ void	wait_for_turn(t_coder *coder, long now)
 	else
 		pthread_cond_wait(&coder->simulation->condition,
 			&coder->simulation->mutex);
-}
-
-bool	abort_request(t_coder *coder)
-{
-	priority_queue_remove(&coder->dongles[0]->queue, coder);
-	priority_queue_remove(&coder->dongles[1]->queue, coder);
-	pthread_mutex_unlock(&coder->simulation->mutex);
-	return (false);
 }
