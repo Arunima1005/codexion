@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/16 20:24:01 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/19 14:41:42 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 14:58:02 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	log_state(t_coder *coder, const char *state)
 		line_begin(coder, get_elapsed_time(coder->simulation), color);
 		printf("%s", state);
 		if (coder->simulation->cli_params.details)
-			printf(" (compiles done: %d)", coder->number_of_compiles);
+			printf(" 		(compiles done: %d)", coder->number_of_compiles);
 		line_end(coder);
 	}
 	pthread_mutex_unlock(&coder->simulation->log_mutex);
@@ -44,7 +44,7 @@ void	log_compile_start(t_coder *coder)
 		line_begin(coder, timestamp, COLOR_RED);
 		printf("is compiling");
 		if (coder->simulation->cli_params.details)
-			printf(" (compile #%d)", coder->number_of_compiles + 1);
+			printf(" 		(compile #%d)", coder->number_of_compiles + 1);
 		line_end(coder);
 	}
 	pthread_mutex_unlock(&coder->simulation->log_mutex);

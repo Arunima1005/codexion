@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 12:06:47 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/19 14:47:56 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 15:05:12 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	parse_args(int argc, char **argv, t_cli_params *cli_params)
 {
 	int	i;
 	
-	if (argc < 9 ||  argc > 11)
+	if (argc < 9 || argc > 11)
 	{
 		fprintf(stderr, "Error: expected 8 arguments, got %d\n", argc - 1);
 		return (false);

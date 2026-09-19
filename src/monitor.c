@@ -6,7 +6,7 @@
 /*   By: archowdh <archowdh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 11:39:00 by archowdh          #+#    #+#             */
-/*   Updated: 2026/09/19 14:52:23 by archowdh         ###   ########.fr       */
+/*   Updated: 2026/09/19 15:05:32 by archowdh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static bool	scan_burnout(t_simulation *simulation, int *out_index)
 static bool	monitor_tick(t_simulation *simulation)
 {
 	int	index;
-	int compiles;
+	int	compiles;
 
 	pthread_mutex_lock(&simulation->mutex);
 	if (simulation->simulation_stop)
