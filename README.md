@@ -8,6 +8,12 @@ Codexion is a concurrency simulation written in C with POSIX threads. Several co
 
 Each coder is a thread, and a separate monitor thread watches for burnout. Dongles are handed out by a scheduler (`fifo` or `edf`) backed by a hand-written priority queue (binary heap), and every dongle has a cooldown after being released.
 
+### Demo
+
+A normal `edf` run with `--color --details` until every coder has compiled 3 times, then a `fifo` run where `time_to_burnout` is too short and coder 1 burns out (real output, played back at real speed):
+
+![Codexion demo](assets/demo.svg)
+
 ## Instructions
 
 ```
